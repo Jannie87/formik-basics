@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import { CSSProperties } from "react";
 import { Post } from "../data";
 import * as Yup from "yup";
+import InputField from "./inputField";
 
 type PostSchema = Record<keyof Post, Yup.AnySchema>;
 
@@ -20,56 +21,50 @@ function PostForm(props: Props) {
     useFormik<Post>({
       initialValues: { title: "", content: "", author: "" },
       validationSchema: PostSchema,
-      onSubmit: props.onSubmit,
+      onSubmit: (post, { resetForm }) => {
+        props.onSubmit(post);
+        resetForm();
+      },
     });
 
   return (
     <form style={rootStyle} onSubmit={handleSubmit}>
-      <label style={labelStyle} htmlFor="title">
-        Title
-      </label>
-      <input
+      <InputField
+        label="Title"
         id="title"
         name="title"
         type="text"
         value={values.title}
         onChange={handleChange}
         onBlur={handleBlur}
+        error={touched.title && errors.title}
       />
 
-      {errors.title && touched.title && (
-        <p style={errorMessageStyle}>{errors.title}</p>
-      )}
-
-      <label style={labelStyle} htmlFor="content">
-        Content
-      </label>
-      <input
+      <InputField
+        label="Content"
         id="content"
         name="content"
         type="text"
         value={values.content}
         onChange={handleChange}
         onBlur={handleBlur}
+        error={touched.content && errors.content}
       />
-      {errors.content && touched.content && (
-        <p style={errorMessageStyle}>{errors.content}</p>
-      )}
-      <label style={labelStyle} htmlFor="author">
-        Author
-      </label>
-      <input
+
+      <InputField
+        label="Author"
         id="author"
         name="author"
         type="text"
         value={values.author}
         onChange={handleChange}
         onBlur={handleBlur}
+        error={touched.author && errors.author}
       />
-      {errors.author && touched.author && (
-        <p style={errorMessageStyle}>{errors.author}</p>
-      )}
-      <button style={{ marginTop: "1rem" }} type="submit">
+      <button
+        style={{ marginTop: "1rem", borderRadius: ".2rem" }}
+        type="submit"
+      >
         Spara
       </button>
     </form>
