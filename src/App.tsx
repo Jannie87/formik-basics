@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { CSSProperties, useState } from "react";
+import PostForm from "./components/postForm";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import { mockedPosts, Post } from "./data";
 
 function App() {
+  const [posts] = useState<Post[]>(mockedPosts);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {/* <PostForm /> */}
+      <main style={mainStyle}>
+        {posts.map((post) => (
+          <div style={cardStyle}>
+            <h3>{post.title}</h3>
+            <p>{post.content}</p>
+            <p>{post.author}</p>
+          </div>
+        ))}
+      </main>
     </div>
   );
 }
+const mainStyle: CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "1rem",
+};
+const cardStyle: CSSProperties = {
+  background: "lightblue",
+  padding: "1rem",
+};
 
 export default App;
