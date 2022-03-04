@@ -1,17 +1,16 @@
 import React, { CSSProperties, useState } from "react";
 import PostForm from "./components/postForm";
-import { Formik } from "formik";
-import * as Yup from "yup";
+
 import { mockedPosts, Post } from "./data";
 
 function App() {
   const [posts] = useState<Post[]>(mockedPosts);
   return (
     <div>
-      {/* <PostForm /> */}
+      <PostForm />
       <main style={mainStyle}>
         {posts.map((post) => (
-          <div style={cardStyle}>
+          <div key={post.title} style={cardStyle}>
             <h3>{post.title}</h3>
             <p>{post.content}</p>
             <p>{post.author}</p>
