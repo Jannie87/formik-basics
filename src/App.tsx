@@ -1,13 +1,17 @@
-import React, { CSSProperties, useState } from "react";
+import React, { CSSProperties, useImperativeHandle, useState } from "react";
 import PostForm from "./components/postForm";
 
 import { mockedPosts, Post } from "./data";
 
 function App() {
-  const [posts] = useState<Post[]>(mockedPosts);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const handleSubmit = (post: Post) => {
+    setPosts([post, ...posts]);
+  };
+
   return (
     <div>
-      <PostForm />
+      <PostForm onSubmit={handleSubmit} />
       <main style={mainStyle}>
         {posts.map((post) => (
           <div key={post.title} style={cardStyle}>

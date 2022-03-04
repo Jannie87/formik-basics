@@ -8,12 +8,12 @@ export const mockedPosts: Post[] = [
   {
     title: "Det första inlägget",
     content: "lorem lorem lorem ipsum",
-    author: "JBK",
+    author: "Nalle",
   },
   {
     title: "Det andra inlägget",
     content: "lorem lorem lorem ipsum",
-    author: "Nalle",
+    author: "Snögubben",
   },
   {
     title: "Det tredje inlägget",

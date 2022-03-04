@@ -11,13 +11,18 @@ const PostSchema = Yup.object().shape({
   author: Yup.string().required(),
 });
 
-function PostForm() {
+interface Props {
+  onSubmit: (post: Post) => void;
+}
+
+function PostForm(props: Props) {
   const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
     useFormik<Post>({
       initialValues: { title: "", content: "", author: "" },
       validationSchema: PostSchema,
-      onSubmit: (post) => console.log(post),
+      onSubmit: props.onSubmit,
     });
+
   return (
     <form style={rootStyle} onSubmit={handleSubmit}>
       <label style={labelStyle} htmlFor="title">
