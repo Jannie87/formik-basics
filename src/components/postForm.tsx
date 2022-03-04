@@ -1,10 +1,10 @@
 import { useFormik } from "formik";
 import { CSSProperties } from "react";
-import { Post } from "../data";
+import { Post, CreatePost } from "../data";
 import * as Yup from "yup";
 import InputField from "./inputField";
 
-type PostSchema = Record<keyof Post, Yup.AnySchema>;
+type PostSchema = Record<keyof CreatePost, Yup.AnySchema>;
 
 const PostSchema = Yup.object().shape({
   title: Yup.string().min(4).max(25).required(),
@@ -13,13 +13,20 @@ const PostSchema = Yup.object().shape({
 });
 
 interface Props {
-  onSubmit: (post: Post) => void;
+  defaultPost?: Post;
+  onSubmit: (post: CreatePost) => void;
 }
+
+const emptyPost: CreatePost = {
+  title: "",
+  content: "",
+  author: "",
+};
 
 function PostForm(props: Props) {
   const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
-    useFormik<Post>({
-      initialValues: { title: "", content: "", author: "" },
+    useFormik<CreatePost | Post>({
+      initialValues: props.defaultPost || emptyPost,
       validationSchema: PostSchema,
       onSubmit: (post, { resetForm }) => {
         props.onSubmit(post);
